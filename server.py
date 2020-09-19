@@ -1,6 +1,6 @@
 import os
 import random
-
+from snk import Snk
 import cherrypy
 
 """
@@ -10,6 +10,8 @@ For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python
 
 
 class Battlesnake(object):
+    # def __init__(self):
+      
     @cherrypy.expose
     @cherrypy.tools.json_out()
     def index(self):
@@ -31,8 +33,15 @@ class Battlesnake(object):
         # cherrypy.request.json contains information about the game that's about to be played.
         # TODO: Use this function to decide how your snake is going to look on the board.
         data = cherrypy.request.json
-
-        print("START")
+        self.snk = Snk(data["board"]["height"], data["board"]["width"])
+        # self.snk.body = data["you"]["body"]
+        # self.snk.head = data["you"]["head"]
+        # self.snk.height = 
+        # self.snk.width = 
+        print(self.snk.board_size())
+        print("START-------------------")
+        print("START-------------------")
+        print("START-------------------")
         return "ok"
 
     @cherrypy.expose
@@ -42,14 +51,29 @@ class Battlesnake(object):
         # This function is called on every turn of a game. It's how your snake decides where to move.
         # Valid moves are "up", "down", "left", or "right".
         # TODO: Use the information in cherrypy.request.json to decide your next move.
+        """
+        game
+        turn
+        board
+        you
+        {
+          'game': {'id': '1ff2fcf2-f7f3-4216-8a4e-bff82626a5be', 'ruleset': {'name': 'solo', 'version': 'v1.0.13'}, 'timeout': 500}, 
+          'turn': 7, 
+          'board': {'height': 11, 'width': 11, 'snakes': [{'id': 'gs_Gkp4Gw97cqMm9WwdjHWtqM4S', 'name': 'not_a_snk', 'latency': '62', 'health': 93, 'body': [{'x': 3, 'y': 8}, {'x': 2, 'y': 8}, {'x': 2, 'y': 7}], 'head': {'x': 3, 'y': 8}, 'length': 3, 'shout': ''}], 'food': [{'x': 4, 'y': 10}, {'x': 5, 'y': 5}, {'x': 10, 'y': 2}, {'x': 7, 'y': 6}], 'hazards': []}, 
+          'you': {'id': 'gs_Gkp4Gw97cqMm9WwdjHWtqM4S', 'name': 'not_a_snk', 'latency': '62', 'health': 93, 'body': [{'x': 3, 'y': 8}, {'x': 2, 'y': 8}, {'x': 2, 'y': 7}], 'head': {'x': 3, 'y': 8}, 'length': 3, 'shout': ''}}
+        """
         data = cherrypy.request.json
-
+        
+        self.snk.body = data["you"]["body"]
+        self.snk.head = data["you"]["head"]
         # Choose a random direction to move in
+        
+        
         possible_moves = ["up", "down", "left", "right"]
-        move = random.choice(possible_moves)
+        # move = random.choice(possible_moves)
 
-        print(f"MOVE: {move}")
-        return {"move": move}
+        # print(f"MOVE: {}")
+        return {"move": self.snk.move()}
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
