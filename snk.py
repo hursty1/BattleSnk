@@ -9,7 +9,7 @@ class Snk:
 		self.height=height
 		self.width=width
 		self.food = []
-		self.closets_food = []
+		self.closets_food = ''
 		self.body=[]
 		self.head=[]
 		self.next_move='left'
@@ -42,16 +42,23 @@ class Snk:
 
 	def move(self):
 		print("finding Moves")
+		if self.head == self.closets_food: self.closets_food = {}
 		self.find_closest_food()
 		# moves = random_move(self.head, self.body, self.height)
+		print(self.food)
 		moves = move_to_food(self.head, self.body, self.height, self.closets_food)
 		return str(moves)
 
 	def find_closest_food(self):
-		print("Finding Closest food")
-		if len(self.closets_food) < 1:
-			dis = distance(self.head, self.closets_food)
+		# print("Finding Closest food")
+		if len(self.food) == 1: self.closets_food = self.food[0]
+		if not self.closets_food:
+			self.closets_food = self.food[0]
+		dis = distance(self.head, self.closets_food)
+		# if self.closets_food:
+		# 	print("Closest food is: ", self.closets_food)
 		for food in self.food:
+			# print("Food is: ", food)
 			if  distance(self.head, food) < dis:
 				print("found new food")
 				self.closets_food = food
@@ -105,7 +112,8 @@ def distance(v1, v2):
 	"""
 	Distance between two vectors
 	"""
-	return math.sqrt(math.pow(v1[0]-v2[0], 2) + math.pow(v1[1]-v2[1], 2))
+	# print("vectors are: ", v1, v2)
+	return math.sqrt(math.pow(v1['x']-v2['x'], 2) + math.pow(v1['y']-v2['y'], 2))
 
 def move_to_food(snk, body, size, food):
 	"""
@@ -113,29 +121,32 @@ def move_to_food(snk, body, size, food):
 	"""
 	#snk = head
 	#resolve x first
-	if snk['x'] != food['x']:
-		if snk['x'] < food['x']:
-			if valid(snk, body, size, ["right"]):
-				return "right"
+	if food:
+		if snk['x'] != food['x']:
+			if snk['x'] < food['x']:
+				if valid(snk, body, size, ["right"]):
+					return "right"
+				else:
+					return random_move(snk, body, size)
 			else:
-				pass
-		else:
-			#move to the left
-			if valid(snk, body, size, ["left"]):
-				return "left"
+				#move to the left
+				if valid(snk, body, size, ["left"]):
+					return "left"
+				else:
+					return random_move(snk, body, size)
+		
+		if snk['y'] != food['y']:
+			if snk['y'] < food['y']:
+				#move to the down
+				if valid(snk, body, size, ["up"]):
+					return "up"
+				else:
+					return random_move(snk, body, size)
 			else:
-				pass
-	
-	if snk['y'] != food['y']:
-		if snk['y'] < food['y']:
-			#move to the down
-			if valid(snk, body, size, ["down"]):
-				return "down"
-			else:
-				pass
-		else:
-			#move to the up
-			if valid(snk, body, size, ["up"]):
-				return "up"
-			else:
-				pass
+				#move to the up
+				if valid(snk, body, size, ["down"]):
+					return "down"
+				else:
+					return random_move(snk, body, size)
+	else:
+		return random_move(snk, body, size)
