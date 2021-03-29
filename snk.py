@@ -19,7 +19,6 @@ class Snk:
 		return [self.height, self.width]
 
 	def snk_body(self):
-		#{'x': 3, 'y': 8}
 		body = [self.head]
 		body.append(body)
 		return body

@@ -2,7 +2,7 @@ import os
 import random
 from snk import Snk
 import cherrypy
-
+from snk_2 import Snk_2
 """
 This is a simple Battlesnake server written in Python.
 For instructions see https://github.com/BattlesnakeOfficial/starter-snake-python/README.md
@@ -33,7 +33,7 @@ class Battlesnake(object):
         # cherrypy.request.json contains information about the game that's about to be played.
         # TODO: Use this function to decide how your snake is going to look on the board.
         data = cherrypy.request.json
-        self.snk = Snk(data["board"]["height"], data["board"]["width"])
+        self.snk = Snk_2(data["board"]["height"], data["board"]["width"])
         # self.snk.body = data["you"]["body"]
         # self.snk.head = data["you"]["head"]
         # self.snk.height = 
@@ -52,9 +52,10 @@ class Battlesnake(object):
         # Valid moves are "up", "down", "left", or "right".
         # TODO: Use the information in cherrypy.request.json to decide your next move.
         data = cherrypy.request.json
-        self.snk.body = data["you"]["body"]
-        self.snk.head = data["you"]["head"]
-        self.snk.food = data['board']['food']
+        # self.snk.body = data["you"]["body"]
+        # self.snk.head = data["you"]["head"]
+        # self.snk.food = data['board']['food']
+        self.snk.store_data(data)
         # Choose a random direction to move in
         # possible_moves = ["up", "down", "left", "right"]
         # move = random.choice(possible_moves)
