@@ -47,15 +47,20 @@ class Snk_2:
     def valid_moves(self):
         X, Y = self.head['x'], self.head['y']
         valid = []
-        if self.board[X+1][Y] == 0 or self.board[X+1][Y] == 1:
-            valid.append('right')
-        elif self.board[X-1][Y] == 0 or self.board[X-1][Y] == 1:
-            valid.append('left')
-        elif self.board[X][Y+1] == 0 or self.board[X][Y+1] == 1:
-            valid.append('up')
-        elif self.board[X][Y-1] == 0 or self.board[X][Y-1] == 1:
-            valid.append('down')
+        if X + 1 < self.width -1:
+            if self.board[X+1][Y] == 0 or self.board[X+1][Y] == 1:
+                valid.append('right')
+        elif X - 1 > 0:
+            if self.board[X-1][Y] == 0 or self.board[X-1][Y] == 1:
+                valid.append('left')
+        elif Y + 1 < self.height -1:
+            if self.board[X][Y+1] == 0 or self.board[X][Y+1] == 1:
+                valid.append('up')
+        elif Y - 1 > 0:
+            if self.board[X][Y-1] == 0 or self.board[X][Y-1] == 1:
+                valid.append('down')
         self.validMoves = valid
+        if len(valid) == 0: valid.append("up")
         return valid
     def catesion(self, x):
         "x value into battle snake x"
