@@ -55,6 +55,7 @@ class Battlesnake(object):
         # self.snk.body = data["you"]["body"]
         # self.snk.head = data["you"]["head"]
         # self.snk.food = data['board']['food']
+        print(data)
         self.snk.store_data(data)
         # Choose a random direction to move in
         # possible_moves = ["up", "down", "left", "right"]

@@ -39,11 +39,11 @@ class Snk_2:
         elif type(l) is list and len(l) == 1:
             X = self.catesion(l[0]['x'])
             self.board[X][l[0]['y']] =value
-        else:
+        elif type(l) is dict:
             X = self.catesion(l['x'])
             self.board[X][l['y']] = value
             print("Saving Single")
-
+        
     def valid_moves(self):
         X, Y = self.head['x'], self.head['y']
         valid = []
